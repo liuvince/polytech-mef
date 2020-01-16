@@ -3,11 +3,11 @@ class Segment:
 	name = "Segment"
 
 	def __init__(self,Point[]):
-		self.id = N
+		self.id = self.N
 		self.p = Point[]
 		self.physical_tag = -1 #???
 
-		N += 1
+		self.N += 1
 	
 
 	def area(self):
