@@ -6,5 +6,5 @@ class Point:
         self.x = float(x)
         self.y = float(y)
         
-        self.N += 1
+        Point.N += 1
         

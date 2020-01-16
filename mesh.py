@@ -1,4 +1,6 @@
 from point import Point
+from segment import Segment
+from triangle import Triangle
 
 class Mesh:
     def __init__(self):
@@ -12,17 +14,54 @@ class Mesh:
     def __str__(self):
         return (self.Npts, self.Nseg, self.Ntri)
 
-    def GmshToMesh(self, model):
+    def GmshToMesh(self):
 
         # Création des points
-        coordonnees = model.getNodes()[1]
+        coordonnees = gmsh.model.mesh.getNodes()[1]
         X = coordonnees[0:-1:3]
         Y = coordonnees[1:-1:3]
 
-        self.Npts = len(model.getNodes()[0])
+        self.Npts = len(gmsh.model.mesh.getNodes()[0])
         for pts in range(self.Npts):
             point = Point(X[pts], Y[pts])
             self.points.append(point)
+
+        # Création des éléments
+        PhysicalGroups = gmsh.model.getPhysicalGroups()
+
+        for dim, physical_tag in PhysicalGroups:
+            entities = gmsh.model.getEntitiesForPhysicalGroup(dim, physical_tag)
+            for entity in entities:
+                # Ajouter des segments
+                if dim == 1:
+                    segments = gmsh.model.mesh.getElements(dim, entity)[2][0]
+                    x = segments[0::2]
+                    y = segments[1::2]
+                    
+                    for i in range(len(x)):
+                        points = []
+                        points.append(self.points[int(x[i]-1)])
+                        points.append(self.points[int(y[i]-1)])
+                        segment = Segment(points, physical_tag)
+                        self.segments.append(segment)
+                        self.Nseg += 1
+
+                if dim == 2:
+                    triangles = gmsh.model.mesh.getElements(dim, entity)[2][0]
+                    
+                    x = triangles[0::3]
+                    y = triangles[1::3]
+                    z = triangles[2::3]
+                    
+                    for i in range(len(x)):
+                        points = []
+                        points.append(self.points[int(x[i]-1)])
+                        points.append(self.points[int(y[i]-1)])
+                        points.append(self.points[int(z[i]-1)])
+                        triangle = Triangle(points, physical_tag)
+                        self.triangles.append(triangle)
+                        self.Ntri += 1
+
 
     def getElements(self, dim, physical_tag):
         if dim == 1:
@@ -70,9 +109,7 @@ model.mesh.generate(2)
 # Code to test mesh element access will be added here !
 
 mesh = Mesh()
-mesh.GmshToMesh(gmsh.model.mesh)
-print(mesh.points[0].x)
-print(mesh.points[0].y)
+mesh.GmshToMesh()
 
 # ==============
 # Finalize GMSH

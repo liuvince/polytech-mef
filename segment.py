@@ -2,19 +2,19 @@ class Segment:
 	N = 1	
 	name = "Segment"
 
-	def __init__(self,Point[]):
+	def __init__(self, p, physical_tag):
 		self.id = self.N
-		self.p = Point[]
-		self.physical_tag = -1 #???
+		self.p = p
+		self.physical_tag = physical_tag
 
-		self.N += 1
+		Segment.N += 1
 	
 
 	def area(self):
 		"""" Calcul la taille du segment """
 		area = 0
 		for i in range(1,len(self.p)):
-			area += sqrt((self.p[i][0]-self.p[i-1][0])^2+(self.p[i][1]-self.p[i-1][1])^2)
+			area += sqrt((self.p[i][0]-self.p[i-1][0])**2+(self.p[i][1]-self.p[i-1][1])**2)
 	
 		return area 
 
