@@ -1,5 +1,5 @@
 class Segment:
-	N = 0	
+	N = 1	
 	name = "Segment"
 
 	def __init__(self,Point[]):
