@@ -1,3 +1,5 @@
+from math import sqrt
+
 class Segment:
 	N = 1	
 	name = "Segment"
@@ -13,12 +15,30 @@ class Segment:
 	def area(self):
 		"""" Calcul la taille du segment """
 		area = 0
-		for i in range(1,len(self.p)):
-			area += sqrt((self.p[i][0]-self.p[i-1][0])**2+(self.p[i][1]-self.p[i-1][1])**2)
+		area += sqrt((self.p[1].x-self.p[0].x)**2+(self.p[1].y-self.p[0].y)**2)
 	
 		return area 
 
 	def jac(self):
 		""" Calcul le jacobien du segment """
 		return self.area()
+
+	#def gaussPoint(self,order=2):
+	#	poids = 1/6
+
+	#	if order==1:
+	#		param = (1/3,1/3)		
+	#		
+	#	elif order==2:
+	#		param = (1/6,1/6)	
+
+	#	phys 
+
+	#	return poids, param, phys
+
+		
+
+	
+	#def phiRef(sel, param, i):	
+
 		
