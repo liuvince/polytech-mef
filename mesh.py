@@ -14,7 +14,7 @@ class Mesh:
     def __str__(self):
         return (self.Npts, self.Nseg, self.Ntri)
 
-    def GmshToMesh(self):
+    def GmshToMesh(self, gmsh):
 
         # Création des points
         coordonnees = gmsh.model.mesh.getNodes()[1]
@@ -83,35 +83,36 @@ class Mesh:
                         points.add(point)
         return points
 
-import sys
-sys.path.insert(0, '/home/v/gmsh-4.4.1-Linux64-sdk/lib')
-import gmsh
-import sys
-gmsh.initialize(sys.argv)
-gmsh.option.setNumber("General.Terminal", 1)
-gmsh.option.setNumber("Mesh.CharacteristicLengthMin", 0.1);
-gmsh.option.setNumber("Mesh.CharacteristicLengthMax", 0.1);
-# Model
-model = gmsh.model
-model.add("Square")
-# Rectangle of (elementary) tag 1
-factory = model.occ
-factory.addRectangle(0,0,0, 1, 1, 1)
-# Sync
-factory.synchronize()
-# Physical groups
-gmsh.model.addPhysicalGroup(1, [1], 1)
-gmsh.model.addPhysicalGroup(1, [2,3,4], 2)
-gmsh.model.addPhysicalGroup(2, [1], 10)
-# Mesh (2D)
-model.mesh.generate(2)
-# ==============
-# Code to test mesh element access will be added here !
+if __name__ == "__main__":
+    import sys
+    sys.path.insert(0, '/home/v/gmsh-4.4.1-Linux64-sdk/lib')
+    import gmsh
+    import sys
+    gmsh.initialize(sys.argv)
+    gmsh.option.setNumber("General.Terminal", 1)
+    gmsh.option.setNumber("Mesh.CharacteristicLengthMin", 0.1);
+    gmsh.option.setNumber("Mesh.CharacteristicLengthMax", 0.1);
+    # Model
+    model = gmsh.model
+    model.add("Square")
+    # Rectangle of (elementary) tag 1
+    factory = model.occ
+    factory.addRectangle(0,0,0, 1, 1, 1)
+    # Sync
+    factory.synchronize()
+    # Physical groups
+    gmsh.model.addPhysicalGroup(1, [1], 1)
+    gmsh.model.addPhysicalGroup(1, [2,3,4], 2)
+    gmsh.model.addPhysicalGroup(2, [1], 10)
+    # Mesh (2D)
+    model.mesh.generate(2)
+    # ==============
+    # Code to test mesh element access will be added here !
 
-mesh = Mesh()
-mesh.GmshToMesh()
+    mesh = Mesh()
+    mesh.GmshToMesh()
 
-# ==============
-# Finalize GMSH
-gmsh.finalize()
+    # ==============
+    # Finalize GMSH
+    gmsh.finalize()
  
