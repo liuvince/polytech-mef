@@ -1,6 +1,4 @@
-from point import Point
-from segment import Segment
-from triangle import Triangle
+from common import Point, Segment, Triangle
 
 class Mesh:
     def __init__(self):
@@ -11,15 +9,12 @@ class Mesh:
         self.Nseg = 0
         self.Ntri = 0
 
-    def __str__(self):
-        return (self.Npts, self.Nseg, self.Ntri)
-
     def GmshToMesh(self, gmsh):
 
         # Création des points
         coordonnees = gmsh.model.mesh.getNodes()[1]
-        X = coordonnees[0:-1:3]
-        Y = coordonnees[1:-1:3]
+        X = coordonnees[0::3]
+        Y = coordonnees[1::3]
 
         self.Npts = len(gmsh.model.mesh.getNodes()[0])
         for pts in range(self.Npts):
@@ -64,55 +59,25 @@ class Mesh:
 
 
     def getElements(self, dim, physical_tag):
+
         if dim == 1:
-            return [segment for segment in self.segments if segment.physical_tag == physical_tag]
-        if dim == 2:
-            return [triangle for triangle in self.triangles if triangle.physical_tag == physical_tag]
+            elements = self.segments
+        elif dim == 2:
+            elements = self.triangles
+
+        return [element for element in elements if element.physical_tag == physical_tag]
 
     def getPoints(self, dim, physical_tag):
+
         points = set()
         if dim == 1:
-            for segment in self.segments:
-                if segment.physical_tag == physical_tag:
-                    for point in segment.p:
-                        points.add(point)
-        if dim == 2:
-            for triangle in self.triangles:
-                if triangle.physical_tag == physical_tag:
-                    for point in triangle.p:
-                        points.add(point)
+            elements = self.segments
+        elif dim == 2:
+            elements = self.triangles
+
+        for element in elements:
+            if element.physical_tag == physical_tag:
+                for point in element.p:
+                    points.add(point)
         return points
-
-if __name__ == "__main__":
-    import sys
-    sys.path.insert(0, '/home/v/gmsh-4.4.1-Linux64-sdk/lib')
-    import gmsh
-    import sys
-    gmsh.initialize(sys.argv)
-    gmsh.option.setNumber("General.Terminal", 1)
-    gmsh.option.setNumber("Mesh.CharacteristicLengthMin", 0.1);
-    gmsh.option.setNumber("Mesh.CharacteristicLengthMax", 0.1);
-    # Model
-    model = gmsh.model
-    model.add("Square")
-    # Rectangle of (elementary) tag 1
-    factory = model.occ
-    factory.addRectangle(0,0,0, 1, 1, 1)
-    # Sync
-    factory.synchronize()
-    # Physical groups
-    gmsh.model.addPhysicalGroup(1, [1], 1)
-    gmsh.model.addPhysicalGroup(1, [2,3,4], 2)
-    gmsh.model.addPhysicalGroup(2, [1], 10)
-    # Mesh (2D)
-    model.mesh.generate(2)
-    # ==============
-    # Code to test mesh element access will be added here !
-
-    mesh = Mesh()
-    mesh.GmshToMesh()
-
-    # ==============
-    # Finalize GMSH
-    gmsh.finalize()
  
