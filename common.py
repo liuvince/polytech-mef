@@ -20,55 +20,48 @@ class Point:
         Point.N += 1
 
 class Segment:
-	N = 1	
-	name = "Segment"
 
-	def __init__(self, p, physical_tag):
-		self.id = self.N
-		self.p = p
-		self.physical_tag = physical_tag
+    N = 1	
+    name = "Segment"
 
-		Segment.N += 1
+    def __init__(self, p, physical_tag):
+        self.id = self.N
+        self.p = p
+        self.physical_tag = physical_tag
+        
+        Segment.N += 1
 	
-
-	def area(self):
-		"""" Calcul la taille du segment """
-		area = 0
-		area += sqrt((self.p[1].x-self.p[0].x)**2+(self.p[1].y-self.p[0].y)**2)
-	
-		return area 
-
-	def jac(self):
-		""" Calcul le jacobien du segment """
-		return self.area()
-
-	def gaussPoint(self,order=2):
+    def area(self):
+        """" Calcul la taille du segment """
+        area = 0
+        area += sqrt((self.p[1].x-self.p[0].x)**2+(self.p[1].y-self.p[0].y)**2)
+        return area 
+    def jac(self):
+        """ Calcul le jacobien du segment """
+        return self.area()
+    
+    def gaussPoint(self,order=2):
         area = self.area()
         param = []
-	    phys = []
-
+        phys = []
         if order==1:
-	        poids = [1]
-
-	    elif order==2:
+            poids = [1]
+        elif order==2:
             poids = [area/6,4*area/6,area/6]
-
             for point in self.p:
                 phys.append((point.x,point.y))
 
         phys.append(((self.p[0].x+self.p[1].x)/2,(self.p[0].y+self.p[1].y)/2))
-
-	    return poids, param, phys
-
-	def phiRef(self, param, i):
+        return poids, param, phys
+    
+    def phiRef(self, param, i):
         if i==0:
             return 1-param[0]-param[1]
         elif i==1:
             return param[0]
         else:
             return param[1]
-
-    def phiGeo(self,param,i):
+    def phiGeo(self, param, i ):
         if i==0:
             return 1-param[0]-param[1]
         elif i==1:
@@ -111,12 +104,12 @@ class Triangle:
 
         phys = []
         for i in param:
-            coord = (0,0)
+            coord = [0,0]
             for j in range(3):
-                coord[0] += phiGeo(i,j)*self.p[j].x
-                coord[1] += phiGeo(i,j)*self.p[j].y
+                coord[0] += self.phiGeo(i,j)*self.p[j].x
+                coord[1] += self.phiGeo(i,j)*self.p[j].y
 
-            phys.append(coord)
+            phys.append(tuple(coord))
 
 
         return poids, param, phys

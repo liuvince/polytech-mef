@@ -71,7 +71,7 @@ def Stiffness(msh, dim, physical_tag, triplets):
 
 # msh: Mesh, dim: int, physical_tag:int, f, B:np.array, order=2
 def Integrale(msh, dim, physical_tag, f, B, order=2):
-    elements = getElements(dim,physical_tag)
+    elements = msh.getElements(dim,physical_tag)
 
     for element in elements:
         poids, param, phys = element.gaussPoint(order)
