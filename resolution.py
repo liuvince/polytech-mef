@@ -6,7 +6,7 @@ sys.path.insert(0, PATH_TO_GMSH_LIB)
 import gmsh
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.sparse import coo_matrix
+from scipy.sparse import coo_matrix, linalg.spsolve
 import geo
 import fem_p1
 import common
@@ -56,12 +56,12 @@ if __name__ == "__main__":
 	fem_p1.Mass(mesh, 2, 10, t)
 	fem_p1.Stiffness(mesh, 2, 10, t)
 	b = np.zeros((mesh.Npts,)) 
-	#fem_p1.Integral(msh, 2, 10, f, b, 2)
+	fem_p1.Integral(msh, 2, 10, f, b, 2)
 	fem_p1.Dirichlet(mesh, 1, 1, diri, t, b)
 
 	# Résolution
 	A = coo_matrix(t.data, (mesh.Npts, mesh.Npts)).tocsr()
-	# U = sparse.linalg.spsolve(A, b)
+	U = linalg.spsolve(A, b)
 
 	# Visualisation
 	"""
