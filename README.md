@@ -52,6 +52,11 @@ python3 compute_error.py
 output/error.png
 ```
 
+* Nous obtenons une pente de :
+
+```
+```
+
 ## Page du cours
 
-* https://bthierry.pages.math.cnrs.fr/teaching/mefi\_main5/
+* https://bthierry.pages.math.cnrs.fr/teaching/mefi_main5/

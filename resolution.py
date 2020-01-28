@@ -89,7 +89,7 @@ if __name__ == "__main__":
     plt.clf()
     plt.tricontourf(x, y, connectivity, U, 12)
     plt.colorbar()
-    plt.title("U approché")
+    plt.title("U approché pour h = {}".format(h))
     plt.savefig(output_u)
     plt.show()
 
@@ -103,7 +103,7 @@ if __name__ == "__main__":
 
     plt.tricontourf(x, y, connectivity, Uref, 12)
     plt.colorbar()
-    plt.title("U ref")
+    plt.title("U ref pour h = {}".format(h))
     plt.savefig(output_uref)
     plt.show()
 
