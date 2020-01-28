@@ -1,14 +1,57 @@
-http://bthierry.pages.math.cnrs.fr/course/fem_tp/fem-quadratures/s
-http://bthierry.pages.math.cnrs.fr/course/fem_tp/fem-solver/
+# Rendu / Projet 2019 - 2020
 
-quadrature
+Vincent LIU, Karl MONGOSSO - MAIN 5 Polytech Sorbonne
 
-http://bthierry.pages.math.cnrs.fr/course/fem/implementation_matrices_elementaires/#quadratures
+## Code élément finis P1
 
-erreur
+* common.py contient les classes: Triplets, Point, Segment, Triangle
 
-http://bthierry.pages.math.cnrs.fr/course/fem/estimation_erreur/
+* geo.py contient la classe mesh, qui représente le maillage
 
-README template
+* fem\_p1.py contient les classes: Mass, Stiffness, Integrale, Dirichlet
 
-https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+## Résolution du problème (1)
+
+* Nous avons installé localement la bibliothèque GMSH SDK, comme indiqué sur : https://bthierry.pages.math.cnrs.fr/tutorial/gmsh/#local-in-the-folder-meh
+
+* Modifier PATH\_TO\_GMSH\_LIB dans:
+
+```
+config.py
+```
+
+* Lancer le script:
+
+```
+python3 resolution.py
+```
+
+* Vous devez obtenir la solution dans:
+
+```
+output/usol.png
+```
+
+## Calcul de l'erreur en norme L2 entre la solution exacte et la solution approchée
+
+* Modifier PATH\_TO\_GMSH\_LIB dans:
+
+```
+config.py
+```
+
+* Lancer le script:
+
+```
+python3 compute_error.py
+```
+
+* Vous devez obtenir la solution dans:
+
+```
+output/error.png
+```
+
+## Page du cours
+
+* https://bthierry.pages.math.cnrs.fr/teaching/mefi\_main5/
