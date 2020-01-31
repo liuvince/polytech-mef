@@ -14,7 +14,7 @@ import geo
 import fem_p1
 import common
 
-#Données
+#Donnees
 def g(x,y):
    return np.sin(np.pi*x)*np.sin(np.pi*y)
 def f(x,y):
@@ -32,7 +32,13 @@ if __name__ == "__main__":
 
     # Parameter
     errors = []
-    H = [0.5, 0.1, 0.05, 0.01, 0.005]
+    count = 0
+    H=[]
+    
+    for i in range(0,100):
+        count+=0.005
+        H.append(count)
+
     for h in H:
            
         print("[compute_error.py] Calcul de l'erreur pour h = {}".format(h))
@@ -67,13 +73,13 @@ if __name__ == "__main__":
         b = np.zeros((mesh.Npts,)) 
         fem_p1.Integrale(mesh, 2, 10, f, b, 2)
         fem_p1.Dirichlet(mesh, 1, 1, diri, t, b)
-        # Résolution
+        # Resolution
         A = coo_matrix(t.data).tocsr()
         U = spsolve(A, b)
 
         x = [pt.x for pt in mesh.points]
         y = [pt.y for pt in mesh.points]
-        ### U de référence
+        ### U de reference
         Uref = np.zeros((mesh.Npts,))
         for pt in mesh.points:
             I = int(pt.id - 1)
@@ -93,12 +99,19 @@ if __name__ == "__main__":
         errors.append(error)
         print("[compute_error.py] h = {} | error = {}".format(h, error))
 
+    print(H)
+    print("---------------------------")
+    print("---------------------------")
+    print("---------------------------")
+
+    print(errors)
+
     # Visualisation
     plt.plot(H, errors, linestyle="--", marker='o', color='b')
     plt.xlabel("h")
     plt.ylabel("Erreur en norme L2")
     plt.xscale("log")
     plt.yscale("log")
-    plt.title("Erreur en fonction de h (échelle log-log)")
+    plt.title("Erreur en fonction de h (echelle log-log)")
     plt.savefig(output)
     plt.show()
