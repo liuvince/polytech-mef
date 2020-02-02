@@ -1,6 +1,7 @@
 import sys
 import os
 from config import PATH_TO_GMSH_LIB
+
 sys.path.insert(0, PATH_TO_GMSH_LIB)
 
 import gmsh
@@ -95,9 +96,11 @@ if __name__ == "__main__":
         common.Triangle.N = 1
 
         # Calcul de l'erreur
-        error = norm(U-Uref, 2)
+        #error = norm(U-Uref, 2)
+        error = fem_p1.Error(mesh, 2, 10, Uref, U, 2)
         errors.append(error)
         print("[compute_error.py] h = {} | error = {}".format(h, error))
+
 
     print(H)
     print("---------------------------")
