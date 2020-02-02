@@ -46,7 +46,7 @@ config.py
 python3 compute_error.py
 ```
 
-* Vous devez obtenir la solution dans pour des h allant de 0.005 à 0.5 avec un pas de 0.005:
+* Vous devez obtenir la solution pour des h allant de 0.005 à 0.5 avec un pas de 0.005 dans:
 
 ```
 output/error.png
@@ -55,7 +55,7 @@ output/error.png
 * Nous obtenons une pente d'environ :
 
 ```
-0.10325741769
+0.02
 ```
 
 ## Page du cours

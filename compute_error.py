@@ -101,14 +101,8 @@ if __name__ == "__main__":
         errors.append(error)
         print("[compute_error.py] h = {} | error = {}".format(h, error))
 
-
-    print(H)
-    print("---------------------------")
-    print("---------------------------")
-    print("---------------------------")
-
-    print(errors)
-
+    #print(errors)
+    
     # Visualisation
     plt.plot(H, errors, linestyle="--", marker='o', color='b')
     plt.xlabel("h")

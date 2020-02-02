@@ -117,8 +117,8 @@ def Dirichlet(msh, dim, physical_tag, g, triplets, B):
         B[I] = g(x, y)
  
 def Error(msh, dim, physical_tag, U_ref, U, order=2):
-
      """ Calcule l'erreur en norme L2. """
+
      elements = msh.getElements(dim,physical_tag)
      # Accumulateur sur l'erreur
      error = 0
