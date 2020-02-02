@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
     print("[resolution.py] figure sauvegardée sur : {}".format(output_uref))
 
-    print("[resolution.py] Erreur en norme: {}".format(norm(Uref - U), 2))
+    print("[resolution.py] Erreur en norme L2: {}".format(fem_p1.Error(mesh, 2, 10, Uref, U, 2)))
 
     # ==============
     # Finalize GMSH

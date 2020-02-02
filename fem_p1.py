@@ -117,16 +117,17 @@ def Dirichlet(msh, dim, physical_tag, g, triplets, B):
         B[I] = g(x, y)
  
 def Error(msh, dim, physical_tag, U_ref, U, order=2):
-	elements = msh.getElements(dim,physical_tag)
-	error = 0
 
-	for element in elements:
-		poids, param, phys = element.gaussPoint(order)
-
-		for i in range(3):
-			I = element.p[i].id-1
-            		
-			for m in range(len(param)):
-				error += element.jac() * poids[m] * ((U_ref[I]-U[I]) * element.phiRef(param[m],i))**2 
-	
-	return sqrt(error)
+     """ Calcule l'erreur en norme L2. """
+     elements = msh.getElements(dim,physical_tag)
+     # Accumulateur sur l'erreur
+     error = 0
+     
+     # Assemblage sur tous les éléments
+     for element in elements:
+         poids, param, phys = element.gaussPoint(order)
+         for i in range(3):
+             I = element.p[i].id-1
+             for m in range(len(param)):
+                 error += element.jac() * poids[m] * ((U_ref[I]-U[I]) * element.phiRef(param[m],i))**2 
+     return sqrt(error)

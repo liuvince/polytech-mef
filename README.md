@@ -54,8 +54,8 @@ output/error.png
 
 * Nous obtenons une pente d'environ :
 
+```
 0.10325741769
-
 ```
 
 ## Page du cours
