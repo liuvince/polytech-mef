@@ -32,6 +32,8 @@ python3 resolution.py
 output/usol.png
 ```
 
+![usol](https://github.com/liuvince/polytech-mef/blob/master/output-example/usol.png)
+
 ## Calcul de l'erreur en norme L2 entre la solution exacte et la solution approchée
 
 * Modifier PATH\_TO\_GMSH\_LIB dans:
@@ -51,6 +53,8 @@ python3 compute_error.py
 ```
 output/error.png
 ```
+
+![error](https://github.com/liuvince/polytech-mef/blob/master/output-example/error.png)
 
 * Nous obtenons une pente d'environ :
 
